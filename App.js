@@ -4,6 +4,7 @@ import { MapView, Constants, Location, Permissions, SQLite } from 'expo';
 import ClueDescription from './components/ClueDescription';
 import ClueOverlay from './components/ClueOverlay';
 import CheckInButton from './components/CheckInButton';
+import db from './controllers/sqlLiteController';
 
 export default class App extends React.Component {
   state = {

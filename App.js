@@ -48,8 +48,8 @@ export default class App extends React.Component {
 
   _degreesToRadians = (degrees) => { return degrees * Math.PI / 180; }
 
-  _distanceInMilesBetweenEarthCoordinates = (lat1, lon1, lat2, lon2) => {
-    let earthRadiusMiles = 3958.756;
+  _distanceInFeetBetweenEarthCoordinates = (lat1, lon1, lat2, lon2) => {
+    let earthRadiusFeet = 20902231.68;
 
     let dLat = this._degreesToRadians(lat2-lat1);
     let dLon = this._degreesToRadians(lon2-lon1);
@@ -60,7 +60,7 @@ export default class App extends React.Component {
     let a = Math.sin(dLat/2) * Math.sin(dLat/2) +
             Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-      return earthRadiusMiles * c;
+      return earthRadiusFeet * c;
   }
 
   _getSavedClue = () => {
@@ -74,7 +74,7 @@ export default class App extends React.Component {
                       if ( result.rows.length ) {
                         clueId = result.rows.item(0);
                         db.transaction(getClueDescription => {
-                          getClueDescription.executeSql('select description, latitude, longitude, place_name, radius from clue inner join on location where clue.id = location.clue_id and clue.id = ?;',
+                          getClueDescription.executeSql(`select description, latitude, longitude, place_name, radius from clue inner join on location where clue.location_id = location.id and clue.id = ?;`,
                                              [clueId],
                                              (_, description_Result) => {
                                                if (description_Result.rows.length) {
@@ -97,7 +97,7 @@ export default class App extends React.Component {
 
   _getNewClue = () => {
     db.transaction(tx => {
-                          tx.executeSql('select id, description, latitude, longitude, place_name, radius from clue inner join on location where clue.id = location.clue_id and completed = 0;',
+                          tx.executeSql('select id, description, latitude, longitude, place_name, radius from clue inner join on location where clue.location_id = location.id and completed = 0;',
                                      [],
                                      (_, result) => {
                                        if ( result.rows.length ) {
@@ -123,17 +123,17 @@ export default class App extends React.Component {
     console.log('check in!');
     this.setState({clue:'BRAND NEW CLUE TEST '});
     this._getLocationAsync();
-    // if (_distanceInMilesBetweenEarthCoordinates(this.state.location.coords.latitude, 
-    //                                            this.state.location.coords.longitude, 
-    //                                            this.state.clueLocation.latitude, 
-    //                                            this.state.clueLocation.longitude) <= this.state.clueLocation.radius) 
-    // {
-    //   this._getNewClue();
-    //   return true;
-    // }
-    // else {
-    //   return false;
-    // }
+    if (this._distanceInFeetBetweenEarthCoordinates(this.state.location.coords.latitude, 
+                                               this.state.location.coords.longitude, 
+                                               this.state.clueLocation.latitude, 
+                                               this.state.clueLocation.longitude) <= this.state.clueLocation.radius) 
+    {
+      this._getNewClue();
+      return true;
+    }
+    else {
+      return false;
+    }
   };
 
   render() {

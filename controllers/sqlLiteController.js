@@ -36,11 +36,11 @@ db.transaction(tx => {
     db.transaction(tx => {
             tx.executeSql('DROP TABLE user');
             tx.executeSql(data.user);
-            tx.executeSql('INSERT INTO user VALUES (0)');
-            tx.executeSql('select * from user', [], (_, { rows }) => {
-            console.log(JSON.stringify(rows));
-            }
-        );
+            //tx.executeSql('INSERT INTO user VALUES (0)');
+            // tx.executeSql('select * from user', [], (_, { rows }) => {
+            // console.log(JSON.stringify(rows));
+            // }
+        // );
      });
   
 export default db;

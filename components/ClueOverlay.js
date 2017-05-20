@@ -8,7 +8,7 @@ class ClueOverlay extends Component {
     return (
       <View style={this.props.style}>
         <View style={styles.container}>
-          <ClueDescription style={styles.clueDescription} />
+          <ClueDescription style={styles.clueDescription} clue={this.props.clue} />
           <ClueCompletion style={styles.clueCompletion} />
         </View>
       </View>

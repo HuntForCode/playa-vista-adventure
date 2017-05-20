@@ -10,7 +10,7 @@ db.transaction(tx => {
     console.log("create table")
       tx.executeSql('DROP TABLE location'); 
       tx.executeSql(data.location); //create the location table
-      tx.executeSql('INSERT INTO location VALUES (2, -118.422407, 33.979476, "CodeSmith", )');
+      tx.executeSql('INSERT INTO location VALUES (2, -118.42228783305588, 33.9794944133926, "CodeSmith", )');
       tx.executeSql('INSERT INTO location VALUES (1, -118.4182312, 33.9767221, "Whole Foods", 130)'); //insert first row
       
       tx.executeSql('INSERT INTO location VALUES (3, -118.422547, 33.977925, "4hr zone", 160)');

@@ -9,9 +9,9 @@ class CheckInButton extends Component {
   render() {
     return (
       <TouchableHighlight onPress={this.props.checkIn} style={this.props.style}>
-        {/*<Text>CHECK</Text>*/}
-        <Image source={{uri: 'https://d30y9cdsu7xlg0.cloudfront.net/png/21729-200.png'}}
-       style={{width: 80, height: 80}} />
+        <Text>CHECK</Text>
+        {/*<Image source={{uri: 'https://d30y9cdsu7xlg0.cloudfront.net/png/21729-200.png'}}
+       style={{width: 80, height: 80}} />*/}
       </TouchableHighlight>
     );
   }

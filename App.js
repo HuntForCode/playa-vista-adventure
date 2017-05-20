@@ -1,6 +1,7 @@
 import React from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 import { MapView, Constants, Location, Permissions } from 'expo';
+import db from './controllers/sqlLiteController';
 
 export default class App extends React.Component {
   state = {

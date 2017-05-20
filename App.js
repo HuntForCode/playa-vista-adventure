@@ -129,10 +129,6 @@ export default class App extends React.Component {
                                                this.state.clueLocation.longitude) <= this.state.clueLocation.radius) 
     {
       this._getNewClue();
-      return true;
-    }
-    else {
-      return false;
     }
   };
 

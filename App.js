@@ -1,6 +1,9 @@
 import React from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { Platform, StyleSheet, Text, View, StatusBar } from 'react-native';
 import { MapView, Constants, Location, Permissions, SQLite } from 'expo';
+import ClueDescription from './components/ClueDescription';
+import ClueOverlay from './components/ClueOverlay';
+import CheckInButton from './components/CheckInButton';
 
 export default class App extends React.Component {
   state = {
@@ -132,30 +135,37 @@ export default class App extends React.Component {
 
   render() {
     if (this.state.location == null) {
-      return (<View style={styles.container}/>);
+      return (<View style={styles.container} />);
     }
-    else
-    {
+    else {
       return (
-        <MapView
-        style={{ flex: 1 }}
-        provider={'google'}
-        region={{
-          latitude:  this.state.location.coords.latitude,
-          longitude: this.state.location.coords.longitude,
-          latitudeDelta: 0,//0.0922,
-          longitudeDelta: 0.01//0.0421,
-        }}
-        >
-          <MapView.Circle
-            radius={20}
-            fillColor={'#00F'}
-            center={{
+        
+        <View style={styles.container}>
+          <StatusBar hidden />
+          
+          
+          <MapView
+            style={styles.mapView}
+            provider={'google'}
+            region={{
               latitude: this.state.location.coords.latitude,
-              longitude: this.state.location.coords.longitude
+              longitude: this.state.location.coords.longitude,
+              latitudeDelta: 0,//0.0922,
+              longitudeDelta: 0.01//0.0421,
             }}
-          />
-        </MapView>
+          >
+            <MapView.Circle
+              radius={20}
+              fillColor={'#00F'}
+              center={{
+                latitude: this.state.location.coords.latitude,
+                longitude: this.state.location.coords.longitude
+              }}
+            />
+            <CheckInButton style={styles.checkInButton} />
+          </MapView>
+          <ClueOverlay style={styles.clueOverlay} />
+        </View>
       );
     }
   }
@@ -164,8 +174,25 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    // backgroundColor: '#000',
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
+  mapView: {
+    flex: 30
+  },
+  clueOverlay: {
+    // flex: 1,
+    height: 16,
+    backgroundColor: '#01579B'
+  },
+  checkInButton: {
+    // color: 'green',
+    // backgroundColor: 'green',
+    height: 80,
+    width: 80,
+    position: 'absolute',
+    bottom: 16,
+    alignSelf: 'center'
+  }
 });

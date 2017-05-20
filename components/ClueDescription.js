@@ -5,7 +5,7 @@ class ClueDescription extends Component {
   render() {
     return (
       <Text style={this.props.style}>
-        Popular choice for for lunch...
+        {this.props.clue}
         {/*{this.props.clueDescription}*/}
       </Text>
     );

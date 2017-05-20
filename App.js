@@ -9,7 +9,7 @@ import db from './controllers/sqlLiteController';
 export default class App extends React.Component {
   state = {
     isGameStarted: false,
-    clue: '',
+    clue: 'test clue',
     clueId: null,
     clueLocation: null,
     location: null,
@@ -120,6 +120,8 @@ export default class App extends React.Component {
   };
 
   _checkInPressed = () => {
+    console.log('check in!');
+    this.setState({clue:'BRAND NEW CLUE TEST '});
     this._getLocationAsync();
     if (this._distanceInFeetBetweenEarthCoordinates(this.state.location.coords.latitude, 
                                                this.state.location.coords.longitude, 
@@ -143,8 +145,9 @@ export default class App extends React.Component {
         
         <View style={styles.container}>
           <StatusBar hidden />
-          
-          
+          <Text>TEST ----></Text>
+            <Text>LAT: {this.state.location.coords.latitude}</Text>
+          <Text>LONG: {this.state.location.coords.longitude}</Text>
           <MapView
             style={styles.mapView}
             provider={'google'}
@@ -163,9 +166,9 @@ export default class App extends React.Component {
                 longitude: this.state.location.coords.longitude
               }}
             />
-            <CheckInButton style={styles.checkInButton} />
+            <CheckInButton style={styles.checkInButton} checkIn={this._checkInPressed} />
           </MapView>
-          <ClueOverlay style={styles.clueOverlay} />
+          <ClueOverlay style={styles.clueOverlay} clue={this.state.clue}/>
         </View>
       );
     }

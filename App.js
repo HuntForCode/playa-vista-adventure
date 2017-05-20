@@ -74,7 +74,7 @@ export default class App extends React.Component {
                       if ( result.rows.length ) {
                         clueId = result.rows.item(0);
                         db.transaction(getClueDescription => {
-                          getClueDescription.executeSql('select description, latitude, longitude, place_name, radius from clue inner join on location where clue.id = location.clue_id and clue.id = ?;',
+                          getClueDescription.executeSql(`select description, latitude, longitude, place_name, radius from clue inner join on location where clue.location_id = location.id and clue.id = ?;`,
                                              [clueId],
                                              (_, description_Result) => {
                                                if (description_Result.rows.length) {
@@ -97,7 +97,7 @@ export default class App extends React.Component {
 
   _getNewClue = () => {
     db.transaction(tx => {
-                          tx.executeSql('select id, description, latitude, longitude, place_name, radius from clue inner join on location where clue.id = location.clue_id and completed = 0;',
+                          tx.executeSql('select id, description, latitude, longitude, place_name, radius from clue inner join on location where clue.location_id = location.id and completed = 0;',
                                      [],
                                      (_, result) => {
                                        if ( result.rows.length ) {

@@ -7,7 +7,7 @@ const db = Expo.SQLite.openDatabase('projectDB');
 
 
 db.transaction(tx => {
-    console.log("create table")
+    console.log("create location table");
       tx.executeSql('DROP TABLE location'); 
       tx.executeSql(data.location); //create the location table
       tx.executeSql('INSERT INTO location VALUES (2, -118.42228783305588, 33.9794944133926, "CodeSmith", )');
@@ -22,6 +22,7 @@ db.transaction(tx => {
 });
 
     db.transaction(tx => {
+      console.log("create clue table");
         tx.executeSql('DROP TABLE clue');
         tx.executeSql(data.clue); //create the location table
         tx.executeSql('INSERT INTO clue VALUES (12, "Home for the next 12 weeks...", 2, 0)');
@@ -36,7 +37,7 @@ db.transaction(tx => {
     });
 
     db.transaction(tx => {
-            tx.executeSql('DROP TABLE user');
+    //        tx.executeSql('DROP TABLE user');
             tx.executeSql(data.user);
             //tx.executeSql('INSERT INTO user VALUES (0)');
             // tx.executeSql('select * from user', [], (_, { rows }) => {

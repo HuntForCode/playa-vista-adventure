@@ -11,7 +11,7 @@ class StartButton extends Component {
           title="START"
           color="green"
         />
-      </View>
+     </View>
     );
   }
 }

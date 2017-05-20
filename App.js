@@ -47,8 +47,8 @@ export default class App extends React.Component {
 
   _degreesToRadians = (degrees) => { return degrees * Math.PI / 180; }
 
-  _distanceInMilesBetweenEarthCoordinates = (lat1, lon1, lat2, lon2) => {
-    let earthRadiusMiles = 3958.756;
+  _distanceInFeetBetweenEarthCoordinates = (lat1, lon1, lat2, lon2) => {
+    let earthRadiusFeet = 20902231.68;
 
     let dLat = this._degreesToRadians(lat2-lat1);
     let dLon = this._degreesToRadians(lon2-lon1);
@@ -59,7 +59,7 @@ export default class App extends React.Component {
     let a = Math.sin(dLat/2) * Math.sin(dLat/2) +
             Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-      return earthRadiusMiles * c;
+      return earthRadiusFeet * c;
   }
 
   _getSavedClue = () => {
@@ -120,7 +120,7 @@ export default class App extends React.Component {
 
   _checkInPressed = () => {
     this._getLocationAsync();
-    if (_distanceInMilesBetweenEarthCoordinates(this.state.location.coords.latitude, 
+    if (this._distanceInFeetBetweenEarthCoordinates(this.state.location.coords.latitude, 
                                                this.state.location.coords.longitude, 
                                                this.state.clueLocation.latitude, 
                                                this.state.clueLocation.longitude) <= this.state.clueLocation.radius) 

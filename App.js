@@ -31,7 +31,6 @@ export default class App extends React.Component {
   }
 
   _getLocationAsync = async () => {
-
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== 'granted') {
       this.setState({
@@ -50,7 +49,7 @@ export default class App extends React.Component {
       });
   };
 
-  _degreesToRadians = (degrees) => { return degrees * (Math.PI / 180); }
+  _degreesToRadians = degrees => degrees * (Math.PI / 180);
 
   _distanceInFeetBetweenEarthCoordinates = (lat1, lon1, lat2, lon2) => {
     let earthRadiusFeet = 20903520;
@@ -66,13 +65,12 @@ export default class App extends React.Component {
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     let distance = earthRadiusFeet * c;
     console.log(distance);
-    this.setState({distance: distance});
-    return earthRadiusFeet * c;
+    this.setState({distance});
+    return distance;
   }
 
   _getSavedClue = () => {
     console.log('getting saved clue');
-    let clueId = null;
 
     // If user played before, continue where the user left off.
     db.transaction(tx => {
@@ -80,7 +78,7 @@ export default class App extends React.Component {
         [],
         (_, result) => {
           if (result.rows.length) {
-            clueId = result.rows.item(0);
+            let clueId = result.rows.item(0);
             db.transaction(getClueDescription => {
               getClueDescription.executeSql(`select * from clue inner join on location where clue.location_id = location.id and clue.id = ?;`,
                 [clueId],
@@ -120,7 +118,7 @@ export default class App extends React.Component {
         (_, result) => {
           console.log(result);
           if (result.rows.length) {
-            let randIndex = Math.floor(Math.random() * 4);
+            let randIndex = Math.floor(Math.random() * result.rows.length);
 
             if(this.state.cluesCompleted === 0)
               randIndex = 0;
@@ -181,12 +179,12 @@ export default class App extends React.Component {
 
         <View style={styles.container}>
           <StatusBar hidden />
-          <Text>TEST ----></Text>
+          {/*<Text>TEST ----></Text>
           <Text>USER LAT: {this.state.location.coords.latitude}</Text>
           <Text>USER LONG: {this.state.location.coords.longitude}</Text>
           <Text>CLUE LAT: {this.state.clueLocation ? this.state.clueLocation.latitude : ''}</Text>
           <Text>CLUE LONG: {this.state.clueLocation ? this.state.clueLocation.longitude : ''}</Text>
-                    <Text>DISTANCE: { this.state.distance }</Text>
+                    <Text>DISTANCE: { this.state.distance }</Text>*/}
 
           <MapView
             style={styles.mapView}
@@ -262,7 +260,7 @@ const styles = StyleSheet.create({
     height: 80,
     width: 80,
     position: 'absolute',
-    bottom: 16,
+    bottom: 40,
     alignSelf: 'center'
   }
 });

@@ -24,14 +24,16 @@ const styles = StyleSheet.create({
   clueDescription: {
     flex: 3,
     fontWeight: 'bold',
-    color: 'white'
+    color: 'white',
+    fontSize: 20
     // fontFamily: 'Helvetica',
   },
   clueCompletion: {
     flex: 1,
     fontWeight: 'bold',
     color: 'white',
-    textAlign: 'right'
+    textAlign: 'right',
+    fontSize: 20
   }
 })
 

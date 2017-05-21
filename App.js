@@ -114,9 +114,6 @@ export default class App extends React.Component {
   _getNewClue = () => {
     console.log('getting new clue');
     db.transaction(tx => {
-      // tx.executeSql(`select clue.id, clue.description, location.latitude, location.longitude, 
-      //                location.place_name, location.radius from 
-      //               clue inner join on location where clue.location_id = location.id;`,
       tx.executeSql(`select *
                      from clue inner join location on clue.location_id = location.id where completed = 0;`,
         [],
@@ -169,11 +166,9 @@ export default class App extends React.Component {
       let completed = this.state.cluesCompleted;
       completed++;
       this.setState({cluesCompleted: completed});
-      return true;
     }
     else {
       console.log('location not found!');
-      return false;
     }
   };
 
@@ -203,14 +198,7 @@ export default class App extends React.Component {
               longitudeDelta: 0.01//0.0421,
             }}
           >
-            {
-              this.state.isGameStarted ?
-                null :
-                <StartButton
-                  style={styles.startButton}
-                  startGame={this._startPressed}
-                />
-            }
+
             <MapView.Circle
               radius={20}
               fillColor={'#00F'}
@@ -219,12 +207,20 @@ export default class App extends React.Component {
                 longitude: this.state.location.coords.longitude
               }}
             />
-            {
-              this.state.isGameStarted &&
-              <CheckInButton style={styles.checkInButton} checkIn={this._checkInPressed} />
-            }
-
           </MapView>
+          {
+              this.state.isGameStarted &&
+              <CheckInButton style={styles.checkInButton} checkIn={this._checkInPressed}/>             
+          }
+
+          {
+              this.state.isGameStarted ?
+                null :
+                <StartButton
+                  style={styles.startButton}
+                  startGame={this._startPressed}
+                />
+          }
           {
             this.state.isGameStarted &&
             <ClueOverlay style={styles.clueOverlay} clue={this.state.clue} cluesCompleted={this.state.cluesCompleted} />

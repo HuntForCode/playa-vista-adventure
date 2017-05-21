@@ -15,7 +15,8 @@ export default class App extends React.Component {
     clueLocation: null,
     location: null,
     errorMessage: null,
-    distance: 0
+    distance: 0,
+    cluesCompleted: 0
   };
 
   componentWillMount() {
@@ -119,7 +120,13 @@ export default class App extends React.Component {
         (_, result) => {
           console.log(result);
           if (result.rows.length) {
-            let record = result.rows.item(0);
+            let randIndex = Math.floor(Math.random() * 4);
+
+            if(this.state.cluesCompleted === 0)
+              randIndex = 0;
+
+            let record = result.rows.item(randIndex);
+            console.log(randIndex);
             console.log(record);
             this.setState({
               isGameStarted: true,
@@ -156,6 +163,9 @@ export default class App extends React.Component {
       this.state.clueLocation.longitude) <= this.state.clueLocation.radius) {
       this._getNewClue();
       console.log('location found!');
+      let completed = this.state.cluesCompleted;
+      completed++;
+      this.setState({cluesCompleted: completed});
     }
     else {
       console.log('location not found!');
@@ -197,10 +207,6 @@ export default class App extends React.Component {
                 longitude: this.state.location.coords.longitude
               }}
             />
-            {/*{
-              this.state.isGameStarted &&}*/}
-              <CheckInButton style={styles.checkInButton} checkIn={this._checkInPressed} />
-            
           </MapView>
           {
               this.state.isGameStarted &&
@@ -217,7 +223,7 @@ export default class App extends React.Component {
           }
           {
             this.state.isGameStarted &&
-            <ClueOverlay style={styles.clueOverlay} clue={this.state.clue} />
+            <ClueOverlay style={styles.clueOverlay} clue={this.state.clue} cluesCompleted={this.state.cluesCompleted} />
           }
         </View>
       );
@@ -246,7 +252,7 @@ const styles = StyleSheet.create({
   },
   clueOverlay: {
     // flex: 1,
-    height: 16,
+    height: 32,
     backgroundColor: '#01579B',
 
   },

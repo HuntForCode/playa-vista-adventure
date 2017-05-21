@@ -120,7 +120,7 @@ export default class App extends React.Component {
           if (result.rows.length) {
             let randIndex = Math.floor(Math.random() * result.rows.length);
 
-            if (this.state.cluesCompleted === 0)
+            if(this.state.cluesCompleted === 0)
               randIndex = 0;
 
             let record = result.rows.item(randIndex);

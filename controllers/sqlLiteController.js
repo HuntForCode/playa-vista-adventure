@@ -5,7 +5,6 @@ import data from './sqlLiteModels';
 
 const db = Expo.SQLite.openDatabase('projectDB');
 
-
 // db.transaction(tx => {
 //   console.log("create table")
 //   tx.executeSql('DROP TABLE location'); 

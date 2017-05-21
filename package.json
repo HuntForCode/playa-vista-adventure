@@ -21,7 +21,6 @@
   "dependencies": {
     "expo": "^16.0.0",
     "react": "16.0.0-alpha.6",
-    "react-native": "^0.43.4",
-    "react-native-material-design": "^0.3.7"
+    "react-native": "^0.43.4"
   }
 }
